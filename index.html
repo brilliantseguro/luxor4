@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxor Red Casino</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* FONDO */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("fondoweb.png") center/cover no-repeat;
+    opacity: 0.32;
+    filter: blur(2px);
+    transform: scale(1.03);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.55), rgba(150,105,20,0.45));
+    z-index: -1;
+}
+
+.container {
+    max-width: 420px;
+    margin: auto;
+    text-align: center;
+    padding: 20px 18px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* LOGO */
+.logo {
+    width: 180px;
+    margin: 8px auto;
+}
+
+/* NOTIFICACION */
+.notification {
+    margin: 6px auto;
+    max-width: 300px;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(10px);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    border: 1px solid #00ff66;
+    box-shadow: 0 0 8px rgba(0,255,100,0.3);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.4s;
+    text-align: center;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stars {
+    color: #fbbc05;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.review-text {
+    color: #ffffff;
+}
+
+.highlight {
+    color: #a259ff;
+    font-weight: 700;
+}
+
+/* BONUS */
+.bonus {
+    margin: 8px 0;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.bonus .extra {
+    color: #00ff66;
+    text-shadow: 0 0 10px rgba(0,255,102,0.9);
+}
+
+/* BOTON */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px;
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 999px;
+    background: rgba(37,211,102,0.25);
+    backdrop-filter: blur(12px);
+    border: 2px solid #25D366;
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    box-shadow: 0 0 20px rgba(37,211,102,0.7);
+    animation: pulse 0.8s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.07); }
+}
+
+.wa-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.ganamos {
+    width: 170px;
+    margin: 8px auto;
+}
+
+/* SLOTS */
+.slots-container {
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.slots {
+    display: flex;
+    gap: 10px;
+    animation: scroll 14s linear infinite;
+}
+
+.slot {
+    min-width: 110px;
+    height: 160px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes scroll {
+    0% {transform: translateX(0);}
+    100% {transform: translateX(-50%);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="logo.png" class="logo">
+
+<div id="notif" class="notification"></div>
+
+<div class="bonus">
+🎁 Te regalamos un <span class="extra">30% EXTRA</span> en tu primer recarga
+</div>
+
+<a class="btn" href="#" onclick="abrirWhatsApp()">
+<img class="wa-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+Pedir mi bono
+</a>
+
+<img src="ganamos.png" class="ganamos">
+
+<div class="slots-container">
+<div class="slots">
+
+<div class="slot"><img src="1111.png"></div>
+<div class="slot"><img src="4444.png"></div>
+<div class="slot"><img src="3333.png"></div>
+<div class="slot"><img src="2222.png"></div>
+<div class="slot"><img src="6666.webp"></div>
+<div class="slot"><img src="5555.jpg"></div>
+
+<div class="slot"><img src="1111.png"></div>
+<div class="slot"><img src="4444.png"></div>
+<div class="slot"><img src="3333.png"></div>
+<div class="slot"><img src="2222.png"></div>
+<div class="slot"><img src="6666.webp"></div>
+<div class="slot"><img src="5555.jpg"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+const nombres = [
+"Rocío","María","Juan","Lucas","Sofía","Martín","Camila","Diego","Valentina","Nicolás",
+"Paula","Leo","Carla","Ezequiel","Micaela","Fernando","Lucía","Bruno","Agustina","Tobías"
+];
+
+const montos = [
+"$5.000","$8.000","$10.000","$12.000","$15.000","$18.000","$20.000",
+"$22.000","$25.000","$30.000","$35.000","$40.000","$50.000"
+];
+
+const notif = document.getElementById("notif");
+
+function mostrarNotif() {
+    const nombre = nombres[Math.floor(Math.random() * nombres.length)];
+    const monto = montos[Math.floor(Math.random() * montos.length)];
+
+    notif.innerHTML = `
+        <div class="stars">★★★★★</div>
+        <div class="review-text">
+            <span class="highlight">${nombre}</span> acaba de acreditar 
+            <span class="highlight">${monto}</span> en Red Luxor
+        </div>
+    `;
+
+    notif.classList.add("show");
+
+    setTimeout(() => {
+        notif.classList.remove("show");
+    }, 2500);
+}
+
+setInterval(mostrarNotif, 3000);
+mostrarNotif();
+
+/* CODIGO DINAMICO */
+function generarCodigo() {
+    const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let codigo = "";
+    for (let i = 0; i < 4; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return codigo;
+}
+
+function abrirWhatsApp() {
+    const codigo = generarCodigo();
+
+    const mensaje = `Holaa quiero jug4r por parte de Noralyy con mi 30%. Cod: ${codigo}`;
+
+    const url = "https://wa.me/5493417418892?text=" + encodeURIComponent(mensaje);
+
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
